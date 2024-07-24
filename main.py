@@ -1,7 +1,9 @@
 def main():
+
     bookPath = "books/frankenstein.txt"
     text = get_book_path(bookPath)
     count = count_words(text)
+
     print(text)
     print(f"{count} words in the text")
     print(count_char(text))
@@ -28,4 +30,8 @@ def count_char(text):
         else:
             char_dict[t] += 1
     return char_dict
+
+
+
+
 main()
