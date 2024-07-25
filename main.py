@@ -3,11 +3,10 @@ def main():
     bookPath = "books/frankenstein.txt"
     text = get_book_path(bookPath)
     count = count_words(text)
-
+    
     print(text)
     print(f"{count} words in the text")
-    print(count_char(text))
-
+    print(report(count_char(text)))
 
 
 def get_book_path(path):
@@ -31,7 +30,16 @@ def count_char(text):
             char_dict[t] += 1
     return char_dict
 
+def report(dictionary):
+    reportList = []
+    for key, value in dictionary.items():
+        if key.isalpha():
+            newDict = {key: value}
+            reportList.append(newDict)
 
+    for d in reportList:
+        for key, value in d.items():
+            print(f"{key} was found {value} times")
 
 
 main()
