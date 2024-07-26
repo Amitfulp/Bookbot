@@ -1,45 +1,42 @@
 def main():
+    book_path = "books/frankenstein.txt"
+    text = get_book_text(book_path)
+    num_words = count_words(text)
+    char_counts = count_char(text)
+    sorted_report = create_sorted_report(char_counts)
 
-    bookPath = "books/frankenstein.txt"
-    text = get_book_path(bookPath)
-    count = count_words(text)
-    
-    print(text)
-    print(f"{count} words in the text")
-    print(report(count_char(text)))
+    print(f"--- Begin report of books/frankenstein.txt ---")
+    print(f"{num_words} words found in the document")
+    print("Characters found in the document:")
 
+    print_report(sorted_report)
 
-def get_book_path(path):
+def get_book_text(path):
     with open(path) as f:
         return f.read()
 
 def count_words(text):
-    count = 0
     words = text.split()
-    for word in words:
-        count += 1
-    return count
+    return len(words)
 
 def count_char(text):
     char_dict = {}
-    loweredText = text.lower()
-    for t in text:
-        if t not in char_dict:
-            char_dict[t] = 0
-        else:
-            char_dict[t] += 1
+    lowered_text = text.lower()
+    for t in lowered_text:
+        if t.isalpha():  # We only care about alphabet characters
+            if t not in char_dict:
+                char_dict[t] = 1  # Initialize count for new character
+            else:
+                char_dict[t] += 1  # Increment count for existing character
     return char_dict
 
-def report(dictionary):
-    reportList = []
-    for key, value in dictionary.items():
-        if key.isalpha():
-            newDict = {key: value}
-            reportList.append(newDict)
+def create_sorted_report(char_dict):
+    report_list = [{"char": key, "count": value} for key, value in char_dict.items()]
+    report_list.sort(key=lambda x: x["count"], reverse=True)
+    return report_list
 
-    for d in reportList:
-        for key, value in d.items():
-            print(f"{key} was found {value} times")
-
+def print_report(report_list):
+    for item in report_list:
+        print(f"The '{item['char']}' character was found {item['count']} times.")
 
 main()
